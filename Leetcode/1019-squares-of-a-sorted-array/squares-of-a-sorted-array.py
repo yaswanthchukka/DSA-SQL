@@ -1,28 +1,34 @@
 class Solution(object):
-    def merge(self,arr):
-        if len(arr)>1:
-            mid=len(arr)//2
-            l_arr=arr[:mid]
-            r_arr=arr[mid:]
-            self.merge(l_arr)
-            self.merge(r_arr)
-            i=j=k=0
-            while i<len(l_arr) and j<len(r_arr):
-                if l_arr[i]>r_arr[j]:
-                    arr[k]=r_arr[j]
-                    j+=1
-                else:
-                    arr[k]=l_arr[i]
-                    i+=1
-                k+=1
-            while i<len(l_arr):
-                arr[k]=l_arr[i]
-                i+=1
-                k+=1
-            while j<len(r_arr):
-                arr[k]=r_arr[j]
-                j+=1
-                k+=1
+    def counting_sort(self,arr, exp):
+        n = len(arr)
+        output = [0] * n
+        count = [0] * 10
+
+        for i in range(n):
+            index = arr[i] // exp
+            count[index % 10] += 1
+
+        for i in range(1, 10):
+            count[i] += count[i - 1]
+
+        i = n - 1
+        while i >= 0:
+            index = arr[i] // exp
+            output[count[index % 10] - 1] = arr[i]
+            count[index % 10] -= 1
+            i -= 1
+
+        i = 0
+        for i in range(n):
+            arr[i] = output[i]
+
+
+    def radix_sort(self,arr):
+        max_num = max(arr)
+        exp = 1
+        while max_num // exp > 0:
+            self.counting_sort(arr, exp)
+            exp *= 10
 
 
 
@@ -32,7 +38,7 @@ class Solution(object):
         :rtype: List[int]
         """
         l=list(map(lambda x:x*x,nums))
-        self.merge(l)
+        self.radix_sort(l)
         return l
         
         
