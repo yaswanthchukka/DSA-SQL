@@ -15,7 +15,10 @@ class Solution:
                 d[s[i]].append(i)
 
         res = 0
-        for  i in d:
-            res += self.fun(d[i])
+        for i in d:
+            if len(d[i]) % 2 == 0:
+                res += 2
+            else:
+                res += 1
         return res
         
