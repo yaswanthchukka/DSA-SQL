@@ -14,15 +14,17 @@ class Solution:
             else:
                 c3 += 1
         k = 0
-        for i in range(c1):
-            nums[k] = 0
-            k += 1
-        for i in range(c2):
-            nums[k] = 1
-            k += 1
-        for i in range(c3):
-            nums[k] = 2
-            k += 1
+        for i in range(c1+c2+c3):
+            if k < c1:
+                nums[k] = 0
+                k += 1
+            elif k >= c1 and k < c1+c2:
+                nums[k] = 1
+                k += 1
+            else:
+                nums[k] = 2
+                k += 1
+
         
         
         
